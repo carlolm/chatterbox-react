@@ -1,13 +1,13 @@
 import React from 'react';
 
 var MessageListEntry = ({ message, username, timeStamp }) => (
-  <div className="video-list-entry">
-    <div className="media-body">
-      <div>{username}</div>
-      <div>{message}</div>
-      <div>{timeStamp}</div>
-    </div>
-  </div>
+  <tr className="message-list-entry">
+    <td className="username">{username}</td>
+    <td className="message-box">
+      <p className="message-text">{message}</p>
+      <span className="timestamp">{timeStamp}</span>
+    </td>
+  </tr>
 );
 
 export default MessageListEntry;

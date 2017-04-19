@@ -22,3 +22,36 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.username {
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.message-table {
+  background-color:darkgrey;
+  margin: 5px;
+  padding: 3px;
+}
+
+.message-list-entry:nth-child(even) {
+  margin: 10px;
+}
+
+.message-box {
+  width: 100%;
+  text-align: left;
+  background-color: whitesmoke;
+  margin: 2px;
+  border-radius: 5px;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.message-list {
+  width: 500px;
+  margin: auto;
+}
