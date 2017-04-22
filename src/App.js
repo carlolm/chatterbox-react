@@ -16,33 +16,52 @@ class App extends Component {
 
     this.state = {
       time: JSON.stringify(new Date()),
-      // messages: [{username:'yvonne', message:'lalala', timeStamp:'2017-04-18T19:32:41.500Z'}, {username:'yvonne', message:'lalala', timeStamp: '2017-04-18T19:32:41.500Z'}]
-      messages: []
+      messages: [],
+      users: []
     };
 
     this.postMessage = this.postMessage.bind(this);
   }
 
-  // componentDidMount() {
-  //   console.log('** did mount **');
-  //   // fs.readFile('.npm/data.txt', 'utf8', function readFileCallback(err, data) {
-  //   //   if (err) {
-  //   //     console.log('** fs error', err);
-  //   //   } else {
-  //   //     console.log('** data **', data);
-  //   //   }
-  //   // });
-  // }
+  postMessage(username, message, roomname) {
 
-  postMessage(username, message) {
-    let newMsg = {
+    const newMsg = {
       username: username,
       message: message,
-      timeStamp: JSON.stringify(new Date())
+      roomname: roomname
     }
-    //debugger;
 
-    this.setState({ messages: [...this.state.messages, newMsg]});    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newMsg)
+    };
+
+    fetch('http://127.0.0.1:3000/classes/messages', options)
+      .then(() => this.getMessages())
+      .catch(err => { console.warn(err) });
+  }
+
+  componentDidMount() {
+    this.getUsers();
+    this.getMessages();
+  }
+
+  getMessages() {
+    fetch('http://127.0.0.1:3000/classes/messages', { method: 'GET' })
+    .then(response => response.json())
+    .then((messages) => this.setState({ messages }))
+    .catch(err => { console.warn(err) });
+  }
+
+  getUsers() {
+    fetch('http://127.0.0.1:3000/classes/getUsers', { method: 'GET' })
+    .then(response => response.json())
+    .then((users) => this.setState({ users }))
+    .catch(err => { console.warn(err) });
   }
 
   render() {
@@ -55,7 +74,7 @@ class App extends Component {
         <div>
           <InputBox postMessage={this.postMessage}/>
         </div>
-          <MessageList messages={this.state.messages}/>
+          <MessageList messages={this.state.messages} users={this.state.users}/>
       </div>
     );
   }
